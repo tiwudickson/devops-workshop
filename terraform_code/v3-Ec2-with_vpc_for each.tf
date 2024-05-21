@@ -33,10 +33,11 @@ resource "aws_instance" "damo_server" {
   //security_groups = [aws_security_group.demo_sg.name]
   vpc_security_group_ids = [aws_security_group.demo_sg.id]
   subnet_id = aws_subnet.dpp-public-subnet-01.id
-
+for_each = toset(["Jenkin-master", "build-slave", "ansible"])
   tags = {
-    Name = "damo-server"
-  }
+     Name = "${each.key}"
+   }
+
 }
 
 resource "aws_vpc" "dpp-vpc" {
